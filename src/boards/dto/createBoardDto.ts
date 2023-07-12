@@ -1,5 +1,4 @@
 export class CreatBoardDto{
-    id : string;
     title : string;
     description : string;
     status : BoardStatus;
