@@ -26,14 +26,14 @@ export class BoardsService {
 
     // -------------------- Update ---------------------
     getOneUpdateBoard(board : Board) : Board[]{
-        const mapBoard : Board[] = this.boards.map(v => v.title !== board.title ? ({v, ...board}) : v);
+        const mapBoard : Board[] = this.boards.map(v => v.id === board.id ? ({v, ...board}) : v);
         this.boards = mapBoard;
         return this.boards;
     }
 
     // -------------------- Delete ---------------------
     getOneDeleteBoard(id : string) : Board[]{
-        const filterBoard : Board[] = this.boards.filter(v => v.id !== id);
+        const filterBoard : Board[] = this.boards.filter(v => v.id === id);
         this.boards = filterBoard;
         return this.boards;
     }
