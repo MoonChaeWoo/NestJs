@@ -26,7 +26,7 @@ export class BoardsService {
 
     // -------------------- Update ---------------------
     getOneUpdateBoard(board : Board) : Board[]{
-        const mapBoard : Board[] = this.boards.map(v => v.id === board.id ? ({v, ...board}) : v);
+        const mapBoard : Board[] = this.boards.map(v => v.title !== board.title ? ({v, ...board}) : v);
         this.boards = mapBoard;
         return this.boards;
     }

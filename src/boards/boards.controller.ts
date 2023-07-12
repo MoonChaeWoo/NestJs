@@ -53,12 +53,6 @@ export class BoardsController {
         return this.boardsService.getOneUpdateBoard(board);
     }
 
-    // 주로 리소스의 식별자나 고유한 값을 전달할 때 사용
-    @Get('/updateGetBoard/:id')
-    updateGetParamBoard(@Param() board : Board) : Board[]{
-        return this.boardsService.getOneUpdateBoard(board);
-    }
-
     @Post('/updatePostBoard')
     updatePostBoard(@Body() board : Board) : Board[]{
         return this.boardsService.getOneUpdateBoard(board);
