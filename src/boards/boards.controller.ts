@@ -1,4 +1,4 @@
-import { Controller, Get, Query, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Query, ValidationPipe, Post, Body } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { Board } from './boards.model';
 
@@ -16,8 +16,13 @@ export class BoardsController {
         return this.boardsService.getAllBoard();
     }
 
-    @Get('/insertoard')
-    createBoard(@Query(new ValidationPipe()) board : Board) : Board{
+    @Get('/insertGetBoard')
+    createGetBoard(@Query(new ValidationPipe()) board : Board) : Board{
+        return this.boardsService.createBoard(board);
+    }
+
+    @Post('/insertPostBoard')
+    createPostBoard(@Body() board : Board) : Board{
         return this.boardsService.createBoard(board);
     }
 
