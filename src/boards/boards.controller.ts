@@ -1,4 +1,4 @@
-import { Controller, Get, Query, ValidationPipe, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Query, ValidationPipe, Post, Body, Param, ParseIntPipe, UsePipes } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { Board } from './boards.model';
 import { CreatBoardDto } from './dto/createBoardDto';
@@ -17,6 +17,7 @@ export class BoardsController {
     }
 
     @Post('/insertPostBoard')
+    @UsePipes(ValidationPipe)
     createPostBoard(@Body() board : CreatBoardDto) : Board{
         return this.boardsService.createBoard(board);
     }
@@ -77,3 +78,9 @@ export class BoardsController {
         return this.boardsService.getOneDeleteBoard(id);
     }
 }
+// 설치해야할 npm 모듈 목록 
+// -> npm list
+
+// 유효성 파이프 모듈 설치와 참고 사이트
+// -> npm install class-validator class-transformer --save
+// -> https://github.com/typestack/class-validator#manual-validation
