@@ -33,7 +33,7 @@ export class BoardsService {
 
     // -------------------- Delete ---------------------
     getOneDeleteBoard(id : string) : Board[]{
-        const filterBoard : Board[] = this.boards.filter(v => v.id === id);
+        const filterBoard : Board[] = this.boards.filter(v => v.id !== id);
         this.boards = filterBoard;
         return this.boards;
     }
