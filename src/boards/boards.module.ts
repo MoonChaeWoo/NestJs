@@ -6,4 +6,6 @@ import { BoardsService } from './boards.service';
   controllers: [BoardsController],
   providers: [BoardsService]
 })
-export class BoardsModule {}
+export class BoardsModule {
+  
+}
