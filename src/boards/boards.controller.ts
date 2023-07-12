@@ -2,6 +2,7 @@ import { Controller, Get, Query, ValidationPipe, Post, Body, Param, ParseIntPipe
 import { BoardsService } from './boards.service';
 import { Board } from './boards.model';
 import { CreatBoardDto } from './dto/createBoardDto';
+import { BoardStatusValidationPipe } from './pipes/board-status-validation.pipe';
 
 @Controller('boards')
 export class BoardsController {
@@ -55,7 +56,7 @@ export class BoardsController {
     }
 
     @Post('/updatePostBoard')
-    updatePostBoard(@Body() board : Board) : Board[]{
+    updatePostBoard(@Body(BoardStatusValidationPipe) board : Board) : Board[]{
         return this.boardsService.getOneUpdateBoard(board);
     }
 

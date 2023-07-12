@@ -1,4 +1,5 @@
 import { IsNotEmpty } from "class-validator";
+import { BoardStatus } from "../boards.model";
 
 export class CreatBoardDto{
     @IsNotEmpty()
@@ -9,9 +10,4 @@ export class CreatBoardDto{
 
     @IsNotEmpty()
     status : BoardStatus;
-}
-
-export enum BoardStatus {
-    PUBLIC = 'PUBLIC',
-    PRIVATE = 'PRIVATE'
 }
