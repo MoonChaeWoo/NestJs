@@ -4,11 +4,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BoardsModule } from './boards/boards.module';
 import { typeormConfig } from './configs/typeorm.config';
+import { PostsModule } from './posts/posts.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeormConfig),
-    BoardsModule],
+    BoardsModule,
+    PostsModule],
   controllers: [AppController],
   providers: [AppService],
 })

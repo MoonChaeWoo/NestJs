@@ -1,8 +1,8 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { BoardStatus } from "./boards.model";
+import { PostStatus } from "./posts.models";
 
 @Entity()
-export class Board extends BaseEntity{
+export class Post extends BaseEntity{
     @PrimaryGeneratedColumn()
     id : number;
 
@@ -10,8 +10,8 @@ export class Board extends BaseEntity{
     title : string;
 
     @Column()
-    description : string;
+    contents : string;
 
     @Column()
-    status : BoardStatus;
+    status : PostStatus;
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Query, ValidationPipe, Post, Body, Param, ParseIntPipe, UsePipes } from '@nestjs/common';
+import { Controller, Get, Query, ValidationPipe, Post, Body, Param, UsePipes } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { Board } from './boards.model';
 import { CreatBoardDto } from './dto/createBoardDto';
