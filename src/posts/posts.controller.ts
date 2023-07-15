@@ -1,11 +1,11 @@
 import { Controller, Get, Query, ValidationPipe, Post, Body, Param, UsePipes } from '@nestjs/common';
-import { PostRepository } from './posts.repository';
 import { Post as PostEntity } from "./posts.entity";
+import { PostsService } from "./posts.service";
 
 @Controller('posts')
 export class PostsController {
 
-    constructor(private readonly postRepository : PostRepository){}
+    constructor(private readonly postsService : PostsService){}
 
     // -------------------------- CRUD ---------------------------
     // --------------------- Create GET POST ---------------------
@@ -13,7 +13,7 @@ export class PostsController {
     // ---------------------- Read GET POST -----------------------
         @Get('/getAllPost')
         getAllPost() : Promise<PostEntity[]> {
-            return this.postRepository.getAllPost();
+            return this.postsService.getAllPost();
         }
 
     // --------------------- Update GET POST ----------------------

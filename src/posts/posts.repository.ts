@@ -8,13 +8,13 @@ export class PostRepository extends Repository<Post>{
         super(Post, dataSource.createEntityManager());
     }
 
-    // -------------------------- CRUD ---------------------------
-    // -------------------------- READ ---------------------------
-    async getAllPost() : Promise<Post[]>{
-        return await this.find();
-    }
+    // // -------------------------- CRUD ---------------------------
+    // // -------------------------- READ ---------------------------
+    // async getAllPost() : Promise<Post[]>{
+    //     return await this.find();
+    // }
 
-    async getPostById(id : number) : Promise<Post>{
-        return await this.findOneBy({id : id});
-    }
+    // async getPostById(id : number) : Promise<Post>{
+    //     return await this.findOneBy({id : id});
+    // }
 }
