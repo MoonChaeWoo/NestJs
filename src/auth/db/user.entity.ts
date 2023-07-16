@@ -10,4 +10,13 @@ export class User extends BaseEntity{
 
     @Column()
     password : string;
-} 
+
+    @Column()
+    roll : rollType;
+}
+
+export enum rollType{
+    ROOT = 'ROOT',
+    ADMIN = 'ADMIN',
+    USERR = 'USER',
+}
