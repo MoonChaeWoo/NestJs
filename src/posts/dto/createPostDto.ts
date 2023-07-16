@@ -1,12 +1,12 @@
 import { IsNotEmpty } from "class-validator";
 import { PostStatus } from "../posts.models";
 
-export class createPostDto{
+export class CreatePostDto{
     @IsNotEmpty()
     title : string;
 
     @IsNotEmpty()
-    content : string;
+    contents : string;
 
     @IsNotEmpty()
     status : PostStatus;
