@@ -16,7 +16,7 @@ export class PostsController {
     }
 
     @Get('/insertPostPost')
-    createPostPost(@Body() createPostDto : CreatePostDto) : Promise<string> {
+    createPostPost(@Body(new ValidationPipe()) createPostDto : CreatePostDto) : Promise<string> {
         return this.postsService.createPost(createPostDto);
     }
 
@@ -42,12 +42,12 @@ export class PostsController {
     }
     // --------------------- Update GET POST ----------------------
     @Get('/updateGetBoard')
-    updateGetQueryPost(@Query() postEntity : PostEntity) : Promise<string>{
+    updateGetQueryPost(@Query(new ValidationPipe()) postEntity : PostEntity) : Promise<string>{
         return this.postsService.getOneUpdatePost(postEntity);
     }
 
     @Post('/updatePostBoard')
-    updatePostBoard(@Body() postEntity : PostEntity) : Promise<string>{
+    updatePostBoard(@Body(new ValidationPipe()) postEntity : PostEntity) : Promise<string>{
         return this.postsService.getOneUpdatePost(postEntity);
     }
 
