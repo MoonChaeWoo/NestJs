@@ -6,13 +6,15 @@ import { BoardsModule } from './boards/boards.module';
 import { typeormConfig } from './configs/typeorm.config';
 import { PostsModule } from './posts/posts.module';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({isGlobal : true}),
     TypeOrmModule.forRoot(typeormConfig),
     BoardsModule,
-    PostsModule],
+    PostsModule,
+    AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -1,5 +1,5 @@
 import { IsNotEmpty } from "class-validator";
-import { PostStatus } from "../posts.models";
+import { PostStatus } from "../db/posts.models";
 
 export class CreatePostDto{
     @IsNotEmpty()
