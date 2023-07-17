@@ -16,9 +16,14 @@ export class AuthService {
     async createUser(authCredentialDto : AuthCredentialDto) : Promise<string>{
         const createUser = this.userRepository.create(authCredentialDto);
 
-        const result = await this.userRepository.save(createUser);
-        if(!result){
-            throw new BadRequestException(`잘못된 요청입니다`);
+        try{
+            await this.userRepository.save(createUser);
+        }catch(e){
+            if(e.code === '23505'){
+                throw new BadRequestException(`ID가 중복되었습니다`);
+            }else{
+                throw new BadRequestException(`잘못된 요청입니다`);
+            }
         }
 
         return '회원가입이 완료되었습니다.';
