@@ -1,8 +1,9 @@
-import { Controller, Get, Query, ValidationPipe, Post, Body, Param, UsePipes, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Query, ValidationPipe, Post, Body, Param, Req, UseGuards } from '@nestjs/common';
 import { User as UserEntity } from './db/user.entity';
 import { AuthCredentialDto } from './dto/authCredentialDto';
 import { AuthService } from './auth.service';
 import { AuthLoginDto } from './dto/authLoginDto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
@@ -17,6 +18,12 @@ export class AuthController {
     @Post('/postLogin')
     postLogin(@Body(ValidationPipe) authLoginDto : AuthLoginDto) : Promise<{accessToken : string}> {
         return this.authService.loginUser(authLoginDto);
+    }
+
+    @Get('/reqTest')
+    @UseGuards(AuthGuard())
+    reqTest(@Req() req){
+        console.log('req ====>', req);
     }
 
     // -------------------------- CRUD ---------------------------

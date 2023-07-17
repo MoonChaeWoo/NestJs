@@ -30,7 +30,6 @@ export class AuthService {
     // -------------------------- CRUD ---------------------------
     // ------------------------- CREATE --------------------------
     async createUser(authCredentialDto : AuthCredentialDto) : Promise<string>{
-
         const saltOrRounds = 10;
         authCredentialDto.password = await bcrypt.hash(authCredentialDto.password, saltOrRounds);
 

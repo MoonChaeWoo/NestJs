@@ -4,9 +4,10 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User as UserEntity } from './db/user.entity';
-import { UserRepository } from './db/user.repository';
 import { JwtModule } from '@nestjs/jwt'; // // npm install @nestjs/jwt @nestjs/passport passport passport-jwt --save
 import { PassportModule } from '@nestjs/passport';
+import { JwtStrategy } from './jwt/jwt.strategy';
+import { UserRepository } from './db/user.repository';
 
 @Module({
   imports : [
@@ -18,6 +19,7 @@ import { PassportModule } from '@nestjs/passport';
     TypeOrmModule.forFeature([UserEntity])
   ],
   controllers: [AuthController],
-  providers: [UserRepository, AuthService]
+  providers: [UserRepository, AuthService, JwtStrategy],
+  exports : [JwtStrategy, PassportModule]
 })
 export class AuthModule {}
