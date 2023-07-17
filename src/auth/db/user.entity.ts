@@ -13,6 +13,12 @@ export class User extends BaseEntity{
 
     @Column()
     roll : rollType;
+
+    @Column()
+    email : string;
+
+    @Column()
+    phone : string;
 }
 
 export enum rollType{

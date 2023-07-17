@@ -15,7 +15,7 @@ export class PostsController {
         return this.postsService.createPost(createPostDto);
     }
 
-    @Get('/insertPostPost')
+    @Post('/insertPostPost')
     createPostPost(@Body(new ValidationPipe()) createPostDto : CreatePostDto) : Promise<string> {
         return this.postsService.createPost(createPostDto);
     }
