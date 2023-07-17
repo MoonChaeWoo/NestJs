@@ -1,23 +1,30 @@
-import { Injectable, NotFoundException, BadRequestException, ConflictException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, ConflictException, UnauthorizedException} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from './db/user.repository';
 import { AuthCredentialDto } from './dto/authCredentialDto';
 import { User as UserEntity } from './db/user.entity';
 import * as bcrypt from 'bcrypt'; // npm install bcrypt
 import { AuthLoginDto } from './dto/authLoginDto';
-
+import { JwtService } from '@nestjs/jwt/dist';
 
 @Injectable()
 export class AuthService {
     constructor(
         @InjectRepository(UserRepository)
-        private readonly userRepository : UserRepository
+        private readonly userRepository : UserRepository,
+        private jwtService : JwtService
     ){}
 
     // ------------------------- LOGIN ---------------------------
-    async loginUser(authLoginDto : AuthLoginDto) : Promise<boolean>{
+    async loginUser(authLoginDto : AuthLoginDto) : Promise<{accessToken : string}>{
         const findUser = await this.getUserById(authLoginDto.id);
-        return await bcrypt.compare(authLoginDto.password, findUser.password); 
+        if(await bcrypt.compare(authLoginDto.password, findUser.password)){
+            const payload = { id : authLoginDto.id};
+            const accessToken = await this.jwtService.sign(payload);
+            return { accessToken };
+        }else{
+            throw new UnauthorizedException('인증에 실패하였습니다');
+        } 
     }
 
     // -------------------------- CRUD ---------------------------

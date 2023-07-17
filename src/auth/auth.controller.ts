@@ -10,12 +10,12 @@ export class AuthController {
 
     // ------------------------- LOGIN ---------------------------
     @Get('/getLogin')
-    getLogin(@Query(ValidationPipe) authLoginDto : AuthLoginDto) : Promise<boolean> {
+    getLogin(@Query(ValidationPipe) authLoginDto : AuthLoginDto) : Promise<{accessToken : string}> {
         return this.authService.loginUser(authLoginDto);
     }
 
     @Post('/postLogin')
-    postLogin(@Body(ValidationPipe) authLoginDto : AuthLoginDto) : Promise<boolean> {
+    postLogin(@Body(ValidationPipe) authLoginDto : AuthLoginDto) : Promise<{accessToken : string}> {
         return this.authService.loginUser(authLoginDto);
     }
 
