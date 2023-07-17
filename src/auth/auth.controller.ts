@@ -2,10 +2,22 @@ import { Controller, Get, Query, ValidationPipe, Post, Body, Param, UsePipes, Pa
 import { User as UserEntity } from './db/user.entity';
 import { AuthCredentialDto } from './dto/authCredentialDto';
 import { AuthService } from './auth.service';
+import { AuthLoginDto } from './dto/authLoginDto';
 
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService : AuthService){}
+
+    // ------------------------- LOGIN ---------------------------
+    @Get('/getLogin')
+    getLogin(@Query(ValidationPipe) authLoginDto : AuthLoginDto) : Promise<boolean> {
+        return this.authService.loginUser(authLoginDto);
+    }
+
+    @Post('/postLogin')
+    postLogin(@Body(ValidationPipe) authLoginDto : AuthLoginDto) : Promise<boolean> {
+        return this.authService.loginUser(authLoginDto);
+    }
 
     // -------------------------- CRUD ---------------------------
     // ------------------------- CREATE --------------------------

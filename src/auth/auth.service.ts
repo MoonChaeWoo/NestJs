@@ -4,6 +4,7 @@ import { UserRepository } from './db/user.repository';
 import { AuthCredentialDto } from './dto/authCredentialDto';
 import { User as UserEntity } from './db/user.entity';
 import * as bcrypt from 'bcrypt';
+import { AuthLoginDto } from './dto/authLoginDto';
 
 @Injectable()
 export class AuthService {
@@ -11,6 +12,12 @@ export class AuthService {
         @InjectRepository(UserRepository)
         private readonly userRepository : UserRepository
     ){}
+
+    // ------------------------- LOGIN ---------------------------
+    async loginUser(authLoginDto : AuthLoginDto) : Promise<boolean>{
+        const findUser = await this.getUserById(authLoginDto.id);
+        return await bcrypt.compare(authLoginDto.password, findUser.password); 
+    }
 
     // -------------------------- CRUD ---------------------------
     // ------------------------- CREATE --------------------------
