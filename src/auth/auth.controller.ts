@@ -10,12 +10,12 @@ export class AuthController {
     // -------------------------- CRUD ---------------------------
     // ------------------------- CREATE --------------------------
     @Get('/getSignUp')
-    createGetPost(@Query(new ValidationPipe()) AuthCredentialDto : AuthCredentialDto) : Promise<string> {
+    createGetPost(@Query(ValidationPipe) AuthCredentialDto : AuthCredentialDto) : Promise<string> {
         return this.authService.createUser(AuthCredentialDto);
     }
 
     @Post('/postSignUp')
-    createPostPost(@Body(new ValidationPipe()) AuthCredentialDto : AuthCredentialDto) : Promise<string> {
+    createPostPost(@Body(ValidationPipe) AuthCredentialDto : AuthCredentialDto) : Promise<string> {
         return this.authService.createUser(AuthCredentialDto);
     }
     // -------------------------- READ ---------------------------
@@ -40,12 +40,12 @@ export class AuthController {
     }
     // ------------------------- UPDATE --------------------------
     @Get('/updateGetUser')
-    updateGetQueryPost(@Query(new ValidationPipe()) userEntity : UserEntity) : Promise<string>{
+    updateGetQueryPost(@Query(ValidationPipe) userEntity : UserEntity) : Promise<string>{
         return this.authService.getOneUpdateUser(userEntity);
     }
 
     @Post('/updatePostUser')
-    updatePostBoard(@Body(new ValidationPipe()) userEntity : UserEntity) : Promise<string>{
+    updatePostBoard(@Body(ValidationPipe) userEntity : UserEntity) : Promise<string>{
         return this.authService.getOneUpdateUser(userEntity);
     }
 
@@ -55,7 +55,6 @@ export class AuthController {
         return this.authService.getOneDeleteUser(id);
     }
 
-    // 주로 리소스의 식별자나 고유한 값을 전달할 때 사용
     @Get('/deleteGetUser/:id')
     deleteGetParamPost(@Param('id') id : string) : Promise<string>{
         return this.authService.getOneDeleteUser(id);
