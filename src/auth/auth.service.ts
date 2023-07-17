@@ -3,8 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from './db/user.repository';
 import { AuthCredentialDto } from './dto/authCredentialDto';
 import { User as UserEntity } from './db/user.entity';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt'; // npm install bcrypt
 import { AuthLoginDto } from './dto/authLoginDto';
+
 
 @Injectable()
 export class AuthService {

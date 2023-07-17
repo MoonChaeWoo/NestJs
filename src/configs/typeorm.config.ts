@@ -1,6 +1,15 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
-import 'dotenv/config';
+//import 'dotenv/config';
 import { join } from 'path';
+import * as dotenv from 'dotenv';
+
+if(process.env.NODE_ENV === 'prod'){
+    dotenv.config({ path: '.env.prod' });
+}else if(process.env.NODE_ENV === 'dev'){
+    dotenv.config({ path: '.env.dev' });
+}else{
+    dotenv.config({ path: '.env.local' });
+}
 
 export const typeormConfig : TypeOrmModuleOptions = {
     type : 'postgres',
@@ -9,7 +18,7 @@ export const typeormConfig : TypeOrmModuleOptions = {
     username : process.env.DB_USERNAME,
     password : process.env.DB_PASSWORD,
     database : process.env.DB_NAME,
-    entities : [join(__dirname, process.env.ENTITY_PATH)],
+    entities : [join(__dirname,process.env.ENTITY_PATH)],
     synchronize : true,
     logging : true
 }
