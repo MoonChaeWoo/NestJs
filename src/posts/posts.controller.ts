@@ -5,6 +5,7 @@ import { CreatePostDto } from './dto/createPostDto';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthGetUser } from 'src/auth/middleware/decorator/auth-decorator';
 import { User } from 'src/auth/db/user.entity';
+import { PostRepository } from './db/posts.repository';
 
 @Controller('posts')
 @UsePipes(ValidationPipe)
@@ -47,6 +48,18 @@ export class PostsController {
     readPostPost(@Body('uid', ParseIntPipe) uid : number) : Promise<PostEntity>{
         return this.postsService.getPostById(uid);
     }
+
+    // ------------------- 해당 유저의 글만 보는 기능 ----------------------
+    @Get('/getPostsByCurrentUser')
+    getGetPostsByCurrentUser(@AuthGetUser() user : User) : Promise<PostEntity[]>{
+        return this.postsService.getPostsByCurrentUser(user);
+    }
+
+    @Post('/getPostsByCurrentUser')
+    getPostPostsByCurrentUser(@AuthGetUser() user : User) : Promise<PostEntity[]>{
+        return this.postsService.getPostsByCurrentUser(user);
+    }
+
     // --------------------- Update GET POST ----------------------
     @Get('/updateGetPost')
     updateGetQueryPost(@Query() postEntity : PostEntity) : Promise<string>{

@@ -1,7 +1,7 @@
-import { Injectable, NotFoundException, BadRequestException, ConflictException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, ConflictException, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PostRepository } from './db/posts.repository';
-import { Post as PostEntity } from "./db/posts.entity";
+import { Post, Post as PostEntity } from "./db/posts.entity";
 import { CreatePostDto } from './dto/createPostDto';
 import { User } from 'src/auth/db/user.entity';
 
@@ -29,6 +29,14 @@ export class PostsService {
     // -------------------------- READ ---------------------------
     async getAllPost() : Promise<PostEntity[]>{
         return await this.postRepository.find();
+    }
+
+    async getPostsByCurrentUser(user : User) : Promise<PostEntity[]>{
+        const posts = this.postRepository
+            .createQueryBuilder('post')
+            .where('post.userUid = :userUid', {userUid : user.uid})
+            .getMany();
+        return posts;
     }
 
     async getPostById(uid : number) : Promise<PostEntity>{
