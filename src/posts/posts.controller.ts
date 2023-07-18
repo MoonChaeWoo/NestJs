@@ -49,7 +49,7 @@ export class PostsController {
         return this.postsService.getPostById(uid);
     }
 
-    // ------------------- 해당 유저의 글만 보는 기능 ----------------------
+    // -------------------- 해당 유저의 글만 보는 기능 ----------------------
     @Get('/getPostsByCurrentUser')
     getGetPostsByCurrentUser(@AuthGetUser() user : User) : Promise<PostEntity[]>{
         return this.postsService.getPostsByCurrentUser(user);
@@ -88,5 +88,16 @@ export class PostsController {
     @Post('/deletePostPost')
     deletePostPost(@Body('uid', ParseIntPipe) uid : number) : Promise<string>{
         return this.postsService.getOneDeletePost(uid);
+    }
+
+    //  ------------------------- 해당 유저의 글 삭제 -------------------
+    @Get('/deleteGetPostByCurrentUser')
+    deleteGetPostsByCurrentUser(@Query('uid', ParseIntPipe) uid : number, @AuthGetUser() user : User) : Promise<string>{
+        return this.postsService.getDeletePostsByCurrentUser(uid, user);
+    }
+
+    @Post('/deletePostPostByCurrentUser')
+    deletePostPostsByCurrentUser(@Body('uid', ParseIntPipe) uid : number, @AuthGetUser() user : User) : Promise<string>{
+        return this.postsService.getDeletePostsByCurrentUser(uid, user);
     }
 }

@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException, BadRequestException, ConflictException, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PostRepository } from './db/posts.repository';
-import { Post, Post as PostEntity } from "./db/posts.entity";
+import { Post as PostEntity } from "./db/posts.entity";
 import { CreatePostDto } from './dto/createPostDto';
-import { User } from 'src/auth/db/user.entity';
+import { User, rollType } from 'src/auth/db/user.entity';
 
 @Injectable()
 export class PostsService {
@@ -64,6 +64,23 @@ export class PostsService {
     // ------------------------- DELETE ---------------------------
     async getOneDeletePost(uid : number) : Promise<string>{
         const result = await this.postRepository.delete(uid);
+        if(result.affected <= 0){
+            throw new NotFoundException(`삭제할 해당 게시글은 없습니다 (${uid})`);
+        }
+        return '삭제가 완료되었습니다';
+    }
+
+    async getDeletePostsByCurrentUser(uid : number, user : User) : Promise<string>{
+        const rolesToDelete = [rollType.ROOT, rollType.ADMIN];
+        const result = await this.postRepository.createQueryBuilder()
+            .delete()
+            .from(PostEntity)
+            .where("uid = :uid", { uid })
+            .andWhere(query => {
+                query.where("userUid = :userUid", { userUid: user.uid })
+                  .orWhere("userUid IN (:...roles)", { role: rolesToDelete });
+              })
+            .execute();
         if(result.affected <= 0){
             throw new NotFoundException(`삭제할 해당 게시글은 없습니다 (${uid})`);
         }
