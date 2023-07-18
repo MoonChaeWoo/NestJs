@@ -28,21 +28,21 @@ export class PostsService {
         return await this.postRepository.find();
     }
 
-    async getPostById(id : number) : Promise<PostEntity>{
-        const findItem = await this.postRepository.findOneBy({id : id});
+    async getPostById(uid : number) : Promise<PostEntity>{
+        const findItem = await this.postRepository.findOneBy({uid : uid});
 
         if(!findItem){
-            throw new NotFoundException(`해당 게시글은 없습니다 (${id})`);
+            throw new NotFoundException(`해당 게시글은 없습니다 (${uid})`);
         }
         return findItem;
     }
 
     // ------------------------- UPDATE ---------------------------
     async getOneUpdatePost(postEntity : PostEntity) : Promise<string>{
-        const findItem = this.getPostById(postEntity.id);
+        const findItem = this.getPostById(postEntity.uid);
         const updateObject = Object.assign(findItem, postEntity);
         
-        const result = await this.postRepository.update(postEntity.id, updateObject);
+        const result = await this.postRepository.update(postEntity.uid, updateObject);
 
         if(result.affected <= 0){
             throw new ConflictException('업데이트에 충돌이 생겼습니다');
@@ -51,10 +51,10 @@ export class PostsService {
     }
 
     // ------------------------- DELETE ---------------------------
-    async getOneDeletePost(id : number) : Promise<string>{
-        const result = await this.postRepository.delete(id);
+    async getOneDeletePost(uid : number) : Promise<string>{
+        const result = await this.postRepository.delete(uid);
         if(result.affected <= 0){
-            throw new NotFoundException(`삭제할 해당 게시글은 없습니다 (${id})`);
+            throw new NotFoundException(`삭제할 해당 게시글은 없습니다 (${uid})`);
         }
         return '삭제가 완료되었습니다';
     }

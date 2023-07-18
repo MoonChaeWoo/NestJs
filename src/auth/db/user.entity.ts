@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Post } from "src/posts/db/posts.entity";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 @Entity()
 export class User extends BaseEntity{
@@ -19,6 +20,9 @@ export class User extends BaseEntity{
 
     @Column()
     phone : string;
+
+    @OneToMany(type => Post, post => post.user, {eager : true})
+    posts : Post[]
 }
 
 export enum rollType{
