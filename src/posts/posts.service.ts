@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException, ConflictException, Query } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PostRepository } from './db/posts.repository';
 import { Post as PostEntity } from "./db/posts.entity";
@@ -17,7 +17,6 @@ export class PostsService {
     async createPost(creatPostDto : CreatePostDto, user : User) : Promise<string> {
         const signaturePost = Object.assign({}, creatPostDto, {user});
         const createPost = this.postRepository.create(signaturePost);
-        console.log('createPost ====>', createPost);
 
         const result = await this.postRepository.save(createPost);
         if(!result){

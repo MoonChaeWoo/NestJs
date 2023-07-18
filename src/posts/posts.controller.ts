@@ -5,7 +5,6 @@ import { CreatePostDto } from './dto/createPostDto';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthGetUser } from 'src/auth/middleware/decorator/auth-decorator';
 import { User } from 'src/auth/db/user.entity';
-import { PostRepository } from './db/posts.repository';
 
 @Controller('posts')
 @UsePipes(ValidationPipe)
