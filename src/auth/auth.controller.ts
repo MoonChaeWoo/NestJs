@@ -4,6 +4,7 @@ import { AuthCredentialDto } from './dto/authCredentialDto';
 import { AuthService } from './auth.service';
 import { AuthLoginDto } from './dto/authLoginDto';
 import { AuthGuard } from '@nestjs/passport';
+import { AuthGetUser } from './middleware/decorator/auth-decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -22,8 +23,8 @@ export class AuthController {
 
     @Get('/reqTest')
     @UseGuards(AuthGuard())
-    reqTest(@Req() req){
-        console.log('req ====>', req);
+    reqTest(@AuthGetUser() user : UserEntity){
+        return user;
     }
 
     // -------------------------- CRUD ---------------------------
