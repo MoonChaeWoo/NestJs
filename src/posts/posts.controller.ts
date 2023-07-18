@@ -1,4 +1,4 @@
-import { Controller, Get, Query, ValidationPipe, Post, Body, Param, UsePipes, ParseIntPipe, UseGuards } from '@nestjs/common';
+import { Controller, Get, Query, ValidationPipe, Post, Body, Param, UsePipes, ParseIntPipe, UseGuards, Logger } from '@nestjs/common';
 import { Post as PostEntity } from "./db/posts.entity";
 import { PostsService } from "./posts.service";
 import { CreatePostDto } from './dto/createPostDto';
@@ -10,7 +10,7 @@ import { User } from 'src/auth/db/user.entity';
 @UsePipes(ValidationPipe)
 @UseGuards(AuthGuard())
 export class PostsController {
-
+    private logger = new Logger();
     constructor(private readonly postsService : PostsService){}
 
     // -------------------------- CRUD ---------------------------
@@ -18,12 +18,14 @@ export class PostsController {
     @Get('/insertGetPost')
     createGetPost(@Query() createPostDto : CreatePostDto,
     @AuthGetUser() user : User) : Promise<string> {
+        this.logger.verbose(`${user.id}님이 게시글을 작성하였습니다`);
         return this.postsService.createPost(createPostDto, user);
     }
 
     @Post('/insertPostPost')
     createPostPost(@Body() createPostDto : CreatePostDto,
     @AuthGetUser() user : User) : Promise<string> {
+        this.logger.verbose(`${user.id}님이 게시글을 작성하였습니다`);
         return this.postsService.createPost(createPostDto, user);
     }
 
