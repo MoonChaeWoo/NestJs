@@ -3,8 +3,11 @@ import { Post as PostEntity } from "./db/posts.entity";
 import { PostsService } from "./posts.service";
 import { CreatePostDto } from './dto/createPostDto';
 import { AuthGuard } from '@nestjs/passport';
+import { AuthGetUser } from 'src/auth/middleware/decorator/auth-decorator';
+import { User } from 'src/auth/db/user.entity';
 
 @Controller('posts')
+@UsePipes(ValidationPipe)
 @UseGuards(AuthGuard())
 export class PostsController {
 
@@ -13,13 +16,15 @@ export class PostsController {
     // -------------------------- CRUD ---------------------------
     // --------------------- Create GET POST ---------------------
     @Get('/insertGetPost')
-    createGetPost(@Query(ValidationPipe) createPostDto : CreatePostDto) : Promise<string> {
-        return this.postsService.createPost(createPostDto);
+    createGetPost(@Query() createPostDto : CreatePostDto,
+    @AuthGetUser() user : User) : Promise<string> {
+        return this.postsService.createPost(createPostDto, user);
     }
 
     @Post('/insertPostPost')
-    createPostPost(@Body(ValidationPipe) createPostDto : CreatePostDto) : Promise<string> {
-        return this.postsService.createPost(createPostDto);
+    createPostPost(@Body() createPostDto : CreatePostDto,
+    @AuthGetUser() user : User) : Promise<string> {
+        return this.postsService.createPost(createPostDto, user);
     }
 
     // ---------------------- Read GET POST -----------------------
@@ -44,12 +49,12 @@ export class PostsController {
     }
     // --------------------- Update GET POST ----------------------
     @Get('/updateGetPost')
-    updateGetQueryPost(@Query(ValidationPipe) postEntity : PostEntity) : Promise<string>{
+    updateGetQueryPost(@Query() postEntity : PostEntity) : Promise<string>{
         return this.postsService.getOneUpdatePost(postEntity);
     }
 
     @Post('/updatePostPost')
-    updatePostPost(@Body(ValidationPipe) postEntity : PostEntity) : Promise<string>{
+    updatePostPost(@Body() postEntity : PostEntity) : Promise<string>{
         return this.postsService.getOneUpdatePost(postEntity);
     }
 

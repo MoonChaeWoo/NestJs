@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { PostRepository } from './db/posts.repository';
 import { Post as PostEntity } from "./db/posts.entity";
 import { CreatePostDto } from './dto/createPostDto';
+import { User } from 'src/auth/db/user.entity';
 
 @Injectable()
 export class PostsService {
@@ -13,8 +14,10 @@ export class PostsService {
 
     // -------------------------- CRUD ---------------------------
     // ------------------------- CREATE --------------------------
-    async createPost(creatPostDto : CreatePostDto) : Promise<string> {
-        const createPost = this.postRepository.create(creatPostDto);
+    async createPost(creatPostDto : CreatePostDto, user : User) : Promise<string> {
+        const signaturePost = Object.assign({}, creatPostDto, {user});
+        const createPost = this.postRepository.create(signaturePost);
+        console.log('createPost ====>', createPost);
 
         const result = await this.postRepository.save(createPost);
         if(!result){
