@@ -1,9 +1,11 @@
-import { Controller, Get, Query, ValidationPipe, Post, Body, Param, UsePipes, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Query, ValidationPipe, Post, Body, Param, UsePipes, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { Post as PostEntity } from "./db/posts.entity";
 import { PostsService } from "./posts.service";
 import { CreatePostDto } from './dto/createPostDto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('posts')
+@UseGuards(AuthGuard())
 export class PostsController {
 
     constructor(private readonly postsService : PostsService){}
