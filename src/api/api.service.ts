@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { SchedulerRegistry, Cron } from '@nestjs/schedule';
+import { SchedulerRegistry } from '@nestjs/schedule';
 import { CronJob } from 'cron';
 import axios from 'axios';
 import { ProxyReq } from './api.controller';
@@ -13,13 +13,7 @@ export class ApiService {
     
     constructor(private readonly schedulerRegistry: SchedulerRegistry) {}
 
-
     private readonly logger = new Logger(ApiService.name);
-
-    // @Cron('* * * * * *', { name: 'cronTask1' })
-    // handleCron() {
-    //     this.logger.debug('Called111 when the current second is *');
-    // }
 
     addDynamicCronJob(name: string, cronTime: string) {
         const job = new CronJob(cronTime, () => {
@@ -38,16 +32,22 @@ export class ApiService {
         this.schedulerRegistry.deleteCronJob(name);
     }
 
-    // 주간 예보 
-    async ReqMidTempForcast() : Promise<JSON | null | string>{
-        const awiatReq = await axios.get('https://apis.data.go.kr/1360000/MidFcstInfoService/getMidTa',{
+    // 기상청 중기기온조회 & 중기육상정보조회
+    async ReqMidFcstInfoService(endPoint : string, regId : string) : Promise<JSON | null | string>{
+        const searchDate = new Intl.DateTimeFormat("ko", {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        }).format(new Date()).replaceAll(/(\.|\s)/g, '').concat('0600');
+
+        const awiatReq = await axios.get('https://apis.data.go.kr/1360000/MidFcstInfoService/'.concat(endPoint),{
             params : {
                 serviceKey : process.env.API_SERVICE_KEY,
                 pageNo : 1,
                 numberOfRows : 10,
                 dataType : 'JSON',
-                regId : '11B10101',
-                tmFc : '202307300600'
+                regId,
+                tmFc : searchDate
             }
         }).then(function(response){
             return JSON.stringify(response.data);

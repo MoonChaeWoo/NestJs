@@ -1,5 +1,7 @@
-import { Controller, Post, Body, Query, Res, ValidationPipe, Get } from '@nestjs/common';
+import { Controller, Query, ValidationPipe, Get } from '@nestjs/common';
 import { ApiService } from './api.service';
+import { MidTempForcast, MidLandFcst, MidFcst } from './enum/midForcast';
+import { Cron } from '@nestjs/schedule';
 
 interface DynamicObject {
     [key: string]: unknown;
@@ -15,7 +17,7 @@ export interface ProxyReq{
 export class ApiController {
     constructor(private readonly apiService: ApiService) {}
 
-    @Get('/')
+    @Get('/addCronJob')
     addDynamicCronJob() {
         const {name, cronTime} = {name : 'test', cronTime : '* * * * * *'}
         this.apiService.addDynamicCronJob(name, cronTime);
@@ -28,11 +30,28 @@ export class ApiController {
         return `Dynamic Cron Job "${name}" removed successfully.`;
     }
 
-    @Get('/MidFcstInfoService')
+    // 기상청 중기기온조회
+    @Get('/getMidTempForcast')
+    //@Cron('* 5 6 * * *', { name: 'getMidTempForcast' })
     ReqMidTempForcast(){
-        return this.apiService.ReqMidTempForcast();
+        return this.apiService.ReqMidFcstInfoService('getMidTa', MidTempForcast.GWANGJU);
     }
     
+    // 기상청 중기육상정보조회
+    @Get('/getMidLandFcst')
+    //@Cron('* 5 6 * * *', { name: 'getMidLandFcst' })
+    ReqMidLandFcst(){
+        return this.apiService.ReqMidFcstInfoService('getMidLandFcst', MidLandFcst.JEOLLANAMDO);
+    }
+
+    // 기상청 중기전망조회
+    @Get('/getMidFcst')
+    //@Cron('* 5 6 * * *', { name: 'getMidFcst' })
+    ReqMidFcst(){
+        return this.apiService.ReqMidFcstInfoService('getMidFcst', MidFcst.JEOLLANAMDO);
+    }
+    
+    // Proxy 요청
     @Get('/Proxy')
     async ProxyReq(@Query() proxyReq : ProxyReq){
         return await this.apiService.ProxyReq(proxyReq);

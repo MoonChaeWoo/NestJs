@@ -1,3 +1,4 @@
+// 중기기온예보구역
 export enum MidTempForcast{
     SEOUL = '11B10101',
     INCHEON = '11B20201',
@@ -25,6 +26,7 @@ export enum MidTempForcast{
     POHANG = '11H10201'
 }
 
+// 중기육상예보구역 
 export enum MidLandFcst{
     GANGWONDOYEONGSEO = '11D10000', // 강원도 영서
     GANGWONDOYEONGDONG = '11D20000', // 강원도 영동
@@ -36,4 +38,18 @@ export enum MidLandFcst{
     GYEONGSANGBUKDO = '11H10000', // 경상북도(대구)
     GYEONGSANGNAMDO = '11H20000', // 경상남도(부산, 울산)
     JEJUISLAND = '11G00000' // 제주도
+}
+
+// 중기기상전망조회
+export enum MidFcst{
+    GANGWONDO = '105',
+    NATIONWIDE = '108',
+    GYEONGGIDO = '109',
+    CHUNGCHEONGBUKDO = '131',
+    CHUNGCHEONGNAMDO = '133',
+    JEOLLABUKDO = '146',
+    JEOLLANAMDO = '156',
+    GYEONGSANGBUKDO = '143',
+    GYEONGSANGNAMDO = '159',
+    JEJUISLAND = '184',
 }
