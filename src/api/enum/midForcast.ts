@@ -1,0 +1,39 @@
+export enum MidTempForcast{
+    SEOUL = '11B10101',
+    INCHEON = '11B20201',
+    SUWON = '11B20601',
+    PAJU = '11B20305',
+    CHUNCHEON = '11D10301',
+    WONJU = '11D10401',
+    GANGNEUNG = '11D20501',
+    DAEJEON = '11C20401',
+    SEOSAN = '11C20101',
+    SEJONG = '11C20404',
+    CHEONGJU = '11C10301',
+    JEJU = '11G00201',
+    SEOGWIPO = '11G00401',
+    GWANGJU = '11F20501',
+    MOKPO = '21F20801',
+    YEOSU = '11F20401',
+    JEONJU = '11F10201',
+    GUNSAN = '21F10501',
+    BUSAN = '11H20201',
+    ULSAN = '11H20101',
+    CHANGWON = '11H20301',
+    DAEGU = '11H10701',
+    ANDONG = '11H10501',
+    POHANG = '11H10201'
+}
+
+export enum MidLandFcst{
+    GANGWONDOYEONGSEO = '11D10000', // 강원도 영서
+    GANGWONDOYEONGDONG = '11D20000', // 강원도 영동
+    GYEONGGIDO = '11B00000', // 경기도(서울, 인천)
+    CHUNGCHEONGBUKDO = '11C20000', // 충청북도
+    CHUNGCHEONGNAMDO = '11C10000', // 충정남도(대전, 세종)
+    JEOLLABUKDO = '11F10000', // 전라북도
+    JEOLLANAMDO = '11F20000', // 전라남도(광주)
+    GYEONGSANGBUKDO = '11H10000', // 경상북도(대구)
+    GYEONGSANGNAMDO = '11H20000', // 경상남도(부산, 울산)
+    JEJUISLAND = '11G00000' // 제주도
+}

@@ -7,14 +7,18 @@ import { typeormConfig } from './configs/typeorm.config';
 import { PostsModule } from './posts/posts.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
+import { ApiModule } from './api/api.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
     ConfigModule.forRoot({isGlobal : true}),
     TypeOrmModule.forRoot(typeormConfig),
+    ScheduleModule.forRoot(),
     BoardsModule,
     PostsModule,
-    AuthModule],
+    AuthModule,
+    ApiModule],
   controllers: [AppController],
   providers: [AppService],
 })
