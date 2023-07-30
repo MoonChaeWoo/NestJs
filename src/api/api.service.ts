@@ -2,10 +2,20 @@ import { Injectable, Logger } from '@nestjs/common';
 import { SchedulerRegistry } from '@nestjs/schedule';
 import { CronJob } from 'cron';
 import axios from 'axios';
-import { ProxyReq } from './api.controller';
 
-interface DynamicObject {
+export interface DynamicObject {
     [key: string]: unknown;
+}
+
+export interface ProxyReq{
+    url : string;
+    method : string;
+    data : DynamicObject;
+}
+
+export interface DynamicParam extends ProxyReq{
+    name : string;
+    cronTime: string;
 }
 
 @Injectable()
@@ -15,24 +25,27 @@ export class ApiService {
 
     private readonly logger = new Logger(ApiService.name);
 
-    addDynamicCronJob(name: string, cronTime: string) {
+    // 크론 동적 추가
+    addDynamicCronJob(dynamicParam : DynamicParam) {
+        const {url, method, data, name, cronTime} = dynamicParam;
         const job = new CronJob(cronTime, () => {
-        this.logger.debug(`Dynamic Cron Job "${name}" is running.`);
+            this.ProxyReq({url, method, data})
         });
 
         // SchedulerRegistry를 통해 크론 작업을 동적으로 추가
         this.schedulerRegistry.addCronJob(name, job);
 
-        // 크론 작업을 시작합니다.
+        // 크론 작업을 시작
         job.start();
     }
 
+    // 크론 동적 삭제
     removeDynamicCronJob(name: string) {
         // SchedulerRegistry를 통해 등록된 크론 작업을 동적으로 제거
         this.schedulerRegistry.deleteCronJob(name);
     }
 
-    // 기상청 중기기온조회 & 중기육상정보조회
+    // 기상청 중기기온조회 & 중기육상정보조회 & 중기전망조회
     async ReqMidFcstInfoService(endPoint : string, regId : string) : Promise<JSON | null | string>{
         const searchDate = new Intl.DateTimeFormat("ko", {
             year: 'numeric',
@@ -61,9 +74,9 @@ export class ApiService {
     async ProxyReq(proxyReq : ProxyReq) : Promise<any>{
         const {url,method,data} = proxyReq;
         if(method.toLocaleLowerCase() === 'post'){
-            return await axios({url,method,data}).then(function(response){return response.data;});
+            return await axios({url,method,data}).then(function(response){return response.data});
         }else if(method.toLocaleLowerCase() === 'get'){
-            return await axios({url,method, params: data}).then(function(response){return response.data;});
+            return await axios({url,method, params: data}).then(function(response){return response.data});
         }else{
             return '다른 방식에 대한 요청은 관리자에게 요청';
         }

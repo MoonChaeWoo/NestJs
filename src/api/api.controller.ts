@@ -1,29 +1,21 @@
 import { Controller, Query, ValidationPipe, Get } from '@nestjs/common';
 import { ApiService } from './api.service';
 import { MidTempForcast, MidLandFcst, MidFcst } from './enum/midForcast';
+import { ProxyReq, DynamicParam } from './api.service';
 import { Cron } from '@nestjs/schedule';
-
-interface DynamicObject {
-    [key: string]: unknown;
-}
-
-export interface ProxyReq{
-    url : string;
-    method : string;
-    data : DynamicObject;
-}
 
 @Controller('api')
 export class ApiController {
     constructor(private readonly apiService: ApiService) {}
 
+    // 스케쥴러 동적 추가
     @Get('/addCronJob')
-    addDynamicCronJob() {
-        const {name, cronTime} = {name : 'test', cronTime : '* * * * * *'}
-        this.apiService.addDynamicCronJob(name, cronTime);
-        return `Dynamic Cron Job "${name}" added successfully.`;
+    addDynamicCronJob(dynamicParam : DynamicParam) {
+        this.apiService.addDynamicCronJob(dynamicParam);
+        return `Dynamic Cron Job "${dynamicParam.name}" add successfully.`;
     }
 
+    // 스케쥴러 동적 삭제
     @Get('/stopCronJob')
     removeDynamicCronJob(@Query('name', ValidationPipe) name : string) {
         this.apiService.removeDynamicCronJob(name);
