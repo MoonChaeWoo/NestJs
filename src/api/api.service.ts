@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { SchedulerRegistry } from '@nestjs/schedule';
 import { CronJob } from 'cron';
+import { TemperatureRepository } from './scheduler/forecast/mid_term/db/temperatures.repository';
 import axios from 'axios';
 
 export interface DynamicObject {
@@ -20,8 +21,8 @@ export interface DynamicParam extends ProxyReq{
 
 @Injectable()
 export class ApiService {
-    
-    constructor(private readonly schedulerRegistry: SchedulerRegistry) {}
+    constructor(private readonly schedulerRegistry: SchedulerRegistry,
+        private readonly temperatureRepository : TemperatureRepository) {}
 
     private readonly logger = new Logger(ApiService.name);
 
