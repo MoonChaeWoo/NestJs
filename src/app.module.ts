@@ -9,6 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { ApiModule } from './api/api.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { EventGateway } from './webSocket/eventGateway';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     AuthModule,
     ApiModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [EventGateway, AppService],
 })
 export class AppModule {}
 
