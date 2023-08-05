@@ -6,6 +6,7 @@ import { User as UserEntity } from './db/user.entity';
 import * as bcrypt from 'bcrypt'; // npm install bcrypt
 import { AuthLoginDto } from './dto/authLoginDto';
 import { JwtService } from '@nestjs/jwt/dist';
+import { rollType } from './db/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -31,6 +32,7 @@ export class AuthService {
     // ------------------------- CREATE --------------------------
     async createUser(authCredentialDto : AuthCredentialDto) : Promise<string>{
         const saltOrRounds = 10;
+        authCredentialDto.roll = rollType.USER;
         authCredentialDto.password = await bcrypt.hash(authCredentialDto.password, saltOrRounds);
 
         const createUser = this.userRepository.create(authCredentialDto);

@@ -28,5 +28,5 @@ export class User extends BaseEntity{
 export enum rollType{
     ROOT = 'ROOT',
     ADMIN = 'ADMIN',
-    USERR = 'USER',
+    USER = 'USER',
 }
