@@ -9,8 +9,8 @@ import {
     OnGatewayInit,
     MessageBody
   } from '@nestjs/websockets';
-  import { Server } from 'ws';
-  import { Logger } from "@nestjs/common";
+import { Server } from 'ws';
+import { Logger } from "@nestjs/common";
 import { Socket } from 'socket.io';
 
 @WebSocketGateway(3002)
@@ -50,6 +50,14 @@ export class EventGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
     @SubscribeMessage('broadcastMsg')
     broadcastMsg(@ConnectedSocket() socket: Socket, @MessageBody() data: string){
         socket.broadcast.emit('broadcastResMsg', { data });
+    }
+
+    
+    //test
+    // 연결되어있는 모든 소켓에 대하여 소켓 데이터 전송 시 이용
+    @SubscribeMessage('broadcastReactReqMsg')
+    broadcastReactReqMsg(@ConnectedSocket() socket: Socket, @MessageBody() data: string){
+        socket.broadcast.emit('broadcastReactResMsg', { data });
     }
 }
 // socket.emit('이벤트 이름', '서버에게 보낼 데이터 내용');
